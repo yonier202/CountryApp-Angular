@@ -12,10 +12,12 @@ import { Region } from '../../interfaces/region.type';
 export class ByRegionPageComponent implements OnInit{
 
   public countries: Country[] = [];
+  public isLoading: boolean = false;
 
   //Region es un molde de lo que debe llevar el arreglo
   public regions: Region[] = ['Africa', 'Europe', 'Americas', 'Asia', 'Oceania'];
   public selectedRegion?: Region;
+
 
   constructor( private countryService: CountriesService){}
 
@@ -25,10 +27,12 @@ export class ByRegionPageComponent implements OnInit{
   }
 
   public searchByRegion(term: Region): void{
+    this.isLoading = true;
     this.selectedRegion = term;
     this.countryService.searRegion(term)
      .subscribe(countries => {
         this.countries = countries;
+        this.isLoading = false;
       })
   }
 }
